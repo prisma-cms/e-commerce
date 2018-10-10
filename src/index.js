@@ -1,1 +1,4 @@
-export default 'Welcome to @prisma-cms/e-commerce'
+
+import ECommerceModule from "./modules";
+
+export default ECommerceModule;
