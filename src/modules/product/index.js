@@ -3,35 +3,33 @@ import chalk from "chalk";
 
 import { fileLoader, mergeTypes } from 'merge-graphql-schemas';
 
-import PrismaModule from "@prisma-cms/prisma-module";
+import PrismaCmsModule from "@prisma-cms/prisma-module";
+import PrismaCmsProcessor from "@prisma-cms/prisma-processor";
 
 
-class ECommerceModule extends PrismaModule {
+export class ProductProcessor extends PrismaCmsProcessor {
 
- 
-
-
-  getResolvers() {
-
-    // console.log("getResolvers");
-
-    const resolvers = super.getResolvers();
-
-    Object.assign(resolvers.Query, {
-      products: this.products,
-      productsConnection: this.productsConnection,
-    });
+  objectType = "Product";
 
 
-    Object.assign(resolvers.Mutation, {
-    });
+
+  async mutate(method, args, info) {
+
+    return super.mutate(method, args);
+
+  }
+
+}
 
 
-    Object.assign(resolvers, {
-    });
+class ECommerceModule extends PrismaCmsModule {
 
 
-    return resolvers;
+
+
+  product(source, args, ctx, info) {
+
+    return ctx.db.query.product({}, info);
   }
 
 
@@ -47,29 +45,61 @@ class ECommerceModule extends PrismaModule {
   }
 
 
-  // products(source, args, ctx, info) {
+  createProductProcessor(source, args, ctx, info) {
 
-  //   console.log("products args", args);
+    return new ProductProcessor(ctx).createWithResponse("Product", args, info);
+  }
 
-  //   return [
-  //     {
-  //       __typename: "ProductType1",
-  //       id: 234,
-  //       name: "DSfsdf",
-  //     },
-  //     {
-  //       __typename: "ProductType2",
-  //       id: 234,
-  //       name: "FDGhfgdhd",
-  //     },
-  //     {
-  //       __typename: "ProductType3",
-  //       id: 2434,
-  //       name: "rgSDasd",
-  //     },
-  //   ];
-  // }
+  updateProductProcessor(source, args, ctx, info) {
 
+    return new ProductProcessor(ctx).updateWithResponse("Product", args, info);
+  }
+
+
+  ProductResponse = {
+
+    data: (source, args, ctx, info) => {
+
+      const {
+        id,
+      } = source.data || {};
+
+      return id ? ctx.db.query.product({
+        where: {
+          id,
+        },
+      }, info) : null;
+    },
+  }
+
+
+  getResolvers() {
+
+    // console.log("getResolvers");
+
+    const resolvers = super.getResolvers();
+
+    Object.assign(resolvers.Query, {
+      product: this.product,
+      products: this.products,
+      productsConnection: this.productsConnection,
+    });
+
+
+    Object.assign(resolvers.Mutation, {
+      createProductProcessor: this.createProductProcessor,
+      updateProductProcessor: this.updateProductProcessor,
+    });
+
+
+    Object.assign(resolvers, {
+      ProductResponse: this.ProductResponse,
+    });
+
+
+    return resolvers;
+  }
+ 
 
 }
 

@@ -17,6 +17,26 @@ const chalk = require("chalk");
 
 const Module = require("../src").default;
 
-new Module()
+ 
+const instance = new Module();
+
+console.log(chalk.green("instance created"));
+
+
+const schema = instance.getSchema();
+
+console.log(chalk.green("schema"), schema);
+
+
+const apiSchema = instance.getSchema();
+
+console.log(chalk.green("apiSchema"), apiSchema);
+
+
+const resolvers = instance.getResolvers();
+
+console.log(chalk.green("resolvers"), resolvers);
+
 
 console.log(chalk.green("Tests passed"));
+

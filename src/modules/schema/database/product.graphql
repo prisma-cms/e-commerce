@@ -2,6 +2,7 @@
 type Product {
   id: ID! @unique
   name: String!
+  image: String
   Route: Route @relation(name: "ProductsRoutes")
   Categories: [ProductCategory!]! @relation(name: "ProductProductCategories")
 }

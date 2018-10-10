@@ -1,0 +1,20 @@
+
+type ProductResponse{
+  success: Boolean!
+  message: String!
+  errors: [Error!]!
+  data: Product
+}
+
+type Mutation{
+
+  createProductProcessor(
+    data: ProductCreateInput!
+  ): ProductResponse!
+
+  updateProductProcessor(
+    data: ProductUpdateInput!
+    where: ProductWhereUniqueInput!
+  ): ProductResponse!
+  
+}

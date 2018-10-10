@@ -2,7 +2,7 @@
   "name": "@prisma-cms/e-commerce",
   "version": "1.0.0",
   "description": "Describe @prisma-cms/e-commerce here",
-  "main": "lib/index.js",
+  "main": "src/index.js",
   "module": "es/index.js",
   "files": [
     "es",
@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@prisma-cms/prisma-module": "^1.0.4-beta",
+    "@prisma-cms/prisma-processor": "^1.0.3-beta",
     "graphql": "^14.0.2",
     "merge-graphql-schemas": "^1.5.7"
   },
