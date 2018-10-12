@@ -1,6 +1,6 @@
 {
   "name": "@prisma-cms/e-commerce",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "e-commerce module for @prisma-cms",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -10,7 +10,7 @@
     "umd"
   ],
   "scripts": {
-    "build": "nwb build-web-module",
+    "build": "nwb build-web-module --copy-files",
     "clean": "nwb clean-module",
     "prepublishOnly": "npm run build",
     "test": "node tests/",

@@ -15,6 +15,31 @@ export class ProductProcessor extends PrismaCmsProcessor {
 
   async mutate(method, args, info) {
 
+    
+    let {
+      data: {
+        name,
+        ...data
+      },
+    } = args;
+
+    if(name !== undefined){
+
+      name = name && name.trim() || "";
+
+      if(!name){
+        this.addFieldError("name", "Не указано название");
+      }
+    }
+
+    Object.assign(data, {
+      name,
+    });
+
+    Object.assign(args, {
+      data,
+    });
+
     return super.mutate(method, args);
 
   }
